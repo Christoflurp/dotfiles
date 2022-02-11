@@ -8,7 +8,6 @@ sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.
 
 ## copy dootfills to root
 
-cp "${clone_dir}/.zshrc" "${HOME}/.zshrc"
-# ln -fs "${clone_dir}/.gitconfig" "${HOME}/.gitconfig"
-cp "${clone_dir}/.vimrc" "${HOME}/.vimrc"
+ln -sf ~/dotfiles/.vimrc ~/.vimrc
+ln -sf ~/dotfiles/.zshrc ~/.zshrc
 
