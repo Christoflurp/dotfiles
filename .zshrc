@@ -19,7 +19,7 @@ git_info() {
 	if [ -z "$branch" ]; then
 		output=""
 	else
-		output="$fg[red] | $fg[blue](${branch}) "
+		output="$fg[red] | $fg[blue](${branch})"
 	fi
 
 	echo "${output}"
@@ -34,7 +34,7 @@ am_i_spun() {
 }
 
 # PROMPT='[%~] | [git_info] >>'
-PROMPT='$(am_i_spun) $fg[green]%~$(git_info)$fg[green]:> $fg[white]'
+PROMPT='$(am_i_spun) $fg[green]%~$(git_info)$fg[green] -> $fg[white]'
 
 s=(git ruby rails)
 
