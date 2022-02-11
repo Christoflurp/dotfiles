@@ -12,23 +12,29 @@ autoload -U colors && colors
 git_info() {
 	local branch="$(git symbolic-ref HEAD 2> /dev/null | cut -d'/' -f3)"
 	local branch_truncated="${branch:0:30}"
+	local output=""
 	if (( ${#branch} > ${#branch_truncated} )); then
 		branch="${branch_truncated}..."
 	fi
+	if [ -z "$branch" ]; then
+		output=""
+	else
+		output="$fg[red] | $fg[blue](${branch}) "
+	fi
 
-	[ -n "${branch}" ] && echo " (${branch})"
+	echo "${output}"
 }
 
 am_i_spun() {
 	if [[ "${SPIN}" ]]; then
-		echo "SPIN"
+		echo "🌀"
 	else
-		echo "LOCAL"
+		echo "🏠"
 	fi
 }
 
-setopt PROIMPT_SUBST
-PROMPT="[%d] | [$(git_info)]\n\t$ >>"
+# PROMPT='[%~] | [git_info] >>'
+PROMPT='$(am_i_spun) $fg[green]%~$(git_info)$fg[green]:> '
 
 s=(git ruby rails)
 

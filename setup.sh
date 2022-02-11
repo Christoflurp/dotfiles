@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+export VISUAL=vim
+export EDITOR="$VISUAL"
+
 clone_dir = `pwd`
 
 ## install oh-my-zsh
