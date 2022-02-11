@@ -34,7 +34,7 @@ am_i_spun() {
 }
 
 # PROMPT='[%~] | [git_info] >>'
-PROMPT='$(am_i_spun) $fg[green]%~$(git_info)$fg[green]:> '
+PROMPT='$(am_i_spun) $fg[green]%~$(git_info)$fg[green]:> $fg[white]'
 
 s=(git ruby rails)
 
