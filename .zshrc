@@ -1,14 +1,18 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
+# Shopify default zshrc has some good stuff
+if [ "$SPIN" ]; then
+	source /etc/zsh/zshrc.default.inc.zsh
+fi
+
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
 # Colours
 autoload -U colors && colors
 
-# Build Prompt
-
+# Build git branch name for PROMPT
 git_info() {
 	local branch="$(git symbolic-ref HEAD 2> /dev/null | cut -d'/' -f3)"
 	local branch_truncated="${branch:0:30}"
@@ -25,6 +29,7 @@ git_info() {
 	echo "${output}"
 }
 
+# Check if local or on spin for PROMPT
 am_i_spun() {
 	if [[ "${SPIN}" ]]; then
 		echo "🌀"
@@ -33,7 +38,6 @@ am_i_spun() {
 	fi
 }
 
-# PROMPT='[%~] | [git_info] >>'
 PROMPT='$(am_i_spun) $fg[green]%~$(git_info)$fg[green] -> $fg[white]'
 
 s=(git ruby rails)
