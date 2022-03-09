@@ -1,0 +1,17 @@
+[core]
+	commitGraph = true
+	editor = code --wait
+[diff]
+	algorithm = patience
+	tool = vim
+[protocol]
+	version = 2
+[user]
+	name = Chris Sweeney
+        email = chris.sweeney@shopify.com
+[difftool "vscode"]
+        cmd = code --wait --diff $LOCAL $REMOTE
+[merge]
+        tool = vscode
+[mergetool "vscode"]
+        cmd = code --wait $MERGED
