@@ -1,16 +1,23 @@
-#!/usr/bin/env bash
+#!/bin/bash
+set -eo pipefail
+IFS=$'\n\t'
 
-export VISUAL=vim
-export EDITOR="$VISUAL"
+if [[ -n $SPIN ]]; then
+  DOOT_DIR="$HOME/dotfiles"
+else
+  DOOT_DIR="$HOME/dev-stuff/dotfiles/doots"
+fi
 
-clone_dir = `pwd`
+if [[ -d $DOOT_DIR ]] && [[ ! -L $DOOT_DIR ]]; then
+  for doot in $(ls -ap $DOOT_DIR | grep -v /); do
+    dootname="$(basename "$doot")"
+    echo "Installing $dootname..."
+    target=~/"$dootname"
+    [[ -f "$target" ]] && mv "$target" "$target.bak"
+    cp "$DOOT_DIR/$dootname" $HOME/"$dootname"
+  done
+else
+  echo "Can't find directory: $DOOT_DIR."
+fi
 
-## install oh-my-zsh
-
-sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-
-## copy dootfills to root
-
-ln -sf ~/dotfiles/.vimrc ~/.vimrc
-ln -sf ~/dotfiles/.zshrc ~/.zshrc
-
+zsh

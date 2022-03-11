@@ -1,9 +1,18 @@
 [core]
 	commitGraph = true
-	editor = code --wait
 [diff]
 	algorithm = patience
-	tool = vim
+[alias]
+	a = add
+	c = commit
+	cam = commit --amend
+	d = diff
+	p = push
+	rb = rebase
+	rba = rebase --abort
+	rbc = rebase --continue
+	s = status
+	main = rebase origin/main
 [protocol]
 	version = 2
 [user]

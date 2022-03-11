@@ -1,33 +1,15 @@
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
+#!/bin/bash
+set -eo pipefail
+IFS=$'\n\t'
+
+# oh-my-zsh setup
+ZSH="$HOME/.oh-my-zsh"
+ZSH_THEME="aussiegeek"
 
 # Shopify default zshrc has some good stuff
-if [ "$SPIN" ]; then
+if [ -n "$SPIN" ]; then
 	source /etc/zsh/zshrc.default.inc.zsh
 fi
-
-# Path to your oh-my-zsh installation.
-export ZSH="$HOME/.oh-my-zsh"
-
-# Colours
-autoload -U colors && colors
-
-# Build git branch name for PROMPT
-git_info() {
-	local branch="$(git symbolic-ref HEAD 2> /dev/null | cut -d'/' -f3)"
-	local branch_truncated="${branch:0:30}"
-	local output=""
-	if (( ${#branch} > ${#branch_truncated} )); then
-		branch="${branch_truncated}..."
-	fi
-	if [ -z "$branch" ]; then
-		output=""
-	else
-		output="$fg[red] | $fg[blue](${branch})"
-	fi
-
-	echo "${output}"
-}
 
 # Check if local or on spin for PROMPT
 am_i_spun() {
@@ -38,13 +20,12 @@ am_i_spun() {
 	fi
 }
 
-PROMPT='$(am_i_spun) $fg[green]%~$(git_info)$fg[green] -> $fg[white]'
-
-s=(git ruby rails)
-
-# Bespoke aliases
-alias shipify-setup="sh ~/dev-stuff/spin-init/shipify-secrets-decrypt.sh"
+# Aliases
+alias g="git"
+alias shipup="sh ~/dev-stuff/spin-init/shipify-secrets-decrypt.sh"
 alias spk="bash ~/dev-stuff/output.sh"
 
 source $ZSH/oh-my-zsh.sh
 
+# Add local or spin stuff to prompt
+PROMPT+=' $(am_i_spun) -> '
