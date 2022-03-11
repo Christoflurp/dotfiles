@@ -1,26 +1,26 @@
 [core]
-	commitGraph = true
+  commitGraph = true
 [diff]
-	algorithm = patience
+  algorithm = patience
 [alias]
-	a = add
-	c = commit
-	cam = commit --amend
-	d = diff
-	p = push
-	rb = rebase
-	rba = rebase --abort
-	rbc = rebase --continue
-	s = status
-	main = rebase origin/main
+  a = add
+  c = commit
+  cam = commit --amend
+  d = diff
+  p = push
+  rb = rebase
+  rba = rebase --abort
+  rbc = rebase --continue
+  s = status
+  main = rebase origin/main
 [protocol]
-	version = 2
+  version = 2
 [user]
-	name = Chris Sweeney
-        email = chris.sweeney@shopify.com
+  name = Chris Sweeney
+  email = chris.sweeney@shopify.com
 [difftool "vscode"]
-        cmd = code --wait --diff $LOCAL $REMOTE
+  cmd = code --wait --diff $LOCAL $REMOTE
 [merge]
-        tool = vscode
+  tool = vscode
 [mergetool "vscode"]
-        cmd = code --wait $MERGED
+  cmd = code --wait $MERGE
