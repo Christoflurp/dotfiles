@@ -1,7 +1,9 @@
 #!/bin/bash
 
+[ ! -d ~/.oh-my-zsh ] && sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+
 if [[ -n $SPIN ]]; then
-  DOOT_DIR="$HOME/dotfiles"
+  DOOT_DIR="$HOME/dotfiles/doots"
 else
   DOOT_DIR="$HOME/dev-stuff/dotfiles/doots"
 fi
