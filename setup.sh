@@ -20,4 +20,4 @@ else
   echo "Can't find directory: $DOOT_DIR."
 fi
 
-zsh
+exec zsh
