@@ -1,10 +1,7 @@
-#!/bin/bash
-set -eo pipefail
-IFS=$'\n\t'
-
 # oh-my-zsh setup
-ZSH="$HOME/.oh-my-zsh"
-ZSH_THEME="aussiegeek"
+export ZSH="$HOME/.oh-my-zsh"
+export ZSH_THEME="aussiegeek"
+plugins=(ruby rails git sudo)
 
 # Shopify default zshrc has some good stuff
 if [ -n "$SPIN" ]; then
@@ -21,11 +18,10 @@ am_i_spun() {
 }
 
 # Aliases
-alias g="git"
 alias shipup="sh ~/dev-stuff/spin-init/shipify-secrets-decrypt.sh"
 alias spk="bash ~/dev-stuff/output.sh"
 
 source $ZSH/oh-my-zsh.sh
 
 # Add local or spin stuff to prompt
-PROMPT+=' $(am_i_spun) -> '
+PROMPT+=" $(am_i_spun) -> "

@@ -1,6 +1,4 @@
 #!/bin/bash
-set -eo pipefail
-IFS=$'\n\t'
 
 if [[ -n $SPIN ]]; then
   DOOT_DIR="$HOME/dotfiles"
