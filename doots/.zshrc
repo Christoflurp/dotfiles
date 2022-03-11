@@ -17,9 +17,12 @@ am_i_spun() {
 	fi
 }
 
-# Aliases
+# Aliases - Local
 alias shipup="sh ~/dev-stuff/spin-init/shipify-secrets-decrypt.sh"
 alias spk="bash ~/dev-stuff/output.sh"
+
+# Aliases - Shopify Dev
+alias dsa="dev style --include-branch-commits"
 
 source $ZSH/oh-my-zsh.sh
 
