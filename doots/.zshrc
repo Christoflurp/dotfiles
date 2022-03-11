@@ -1,6 +1,6 @@
 # oh-my-zsh setup
 export ZSH="$HOME/.oh-my-zsh"
-export ZSH_THEME="aussiegeek"
+export ZSH_THEME="crunch"
 plugins=(ruby rails git sudo)
 
 # Shopify default zshrc has some good stuff
