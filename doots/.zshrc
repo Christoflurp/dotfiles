@@ -18,7 +18,7 @@ am_i_spun() {
 }
 
 # Aliases - Local
-alias shipup="sh ~/dev-stuff/spin-init/shipify-secrets-decrypt.sh"
+alias getit="sh ~/dev-stuff/spin-init/shipify-secrets-decrypt.sh"
 alias spk="bash ~/dev-stuff/output.sh"
 
 # Aliases - Shopify Dev
