@@ -27,4 +27,4 @@ alias dsa="dev style --include-branch-commits"
 source $ZSH/oh-my-zsh.sh
 
 # Add local or spin stuff to prompt
-PROMPT+=" $(am_i_spun) -> "
+PROMPT+="$(am_i_spun) -> "
