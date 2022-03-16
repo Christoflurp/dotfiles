@@ -1,3 +1,6 @@
+# initialize proper env stuff with brew
+[[ -x /opt/homebrew/bin/brew ]] && eval $(/opt/homebrew/bin/brew shellenv)
+
 # oh-my-zsh setup
 export ZSH="$HOME/.oh-my-zsh"
 export ZSH_THEME="crunch"
