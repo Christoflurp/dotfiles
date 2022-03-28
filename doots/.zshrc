@@ -10,7 +10,8 @@ plugins=(ruby rails git sudo)
 if [ -n "$SPIN" ]; then
 	source /etc/zsh/zshrc.default.inc.zsh
 else
-	gpgconf --launch gpg-agent
+	# This properly initializes a cached gpg key for gpg-agent on Spin
+	echo "GPG gunna GPG" | /opt/dev/bin/gpg-auto-pin --clearsign > /dev/null
 fi
 
 # Check if local or on spin for PROMPT
