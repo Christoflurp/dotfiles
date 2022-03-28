@@ -20,6 +20,10 @@ am_i_spun() {
 	fi
 }
 
+# gpg-agent stuff
+GPG_TTY=$(tty)
+export GPG_TTY
+
 # Aliases - Local
 alias getit="sh ~/dev-stuff/spin-init/shipify-secrets-decrypt.sh"
 alias spk="bash ~/dev-stuff/output.sh"
