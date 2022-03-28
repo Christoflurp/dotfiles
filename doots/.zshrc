@@ -9,6 +9,8 @@ plugins=(ruby rails git sudo)
 # Shopify default zshrc has some good stuff
 if [ -n "$SPIN" ]; then
 	source /etc/zsh/zshrc.default.inc.zsh
+else
+	gpgconf --launch gpg-agent
 fi
 
 # Check if local or on spin for PROMPT
