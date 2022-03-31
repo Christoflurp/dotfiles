@@ -31,6 +31,7 @@ export GPG_TTY
 alias getit="sh ~/dev-stuff/spin-init/shipify-secrets-decrypt.sh"
 alias spk="bash ~/dev-stuff/output.sh"
 alias init-gpg="echo 'ugh' | /opt/dev/bin/gpg-auto-pin --clearsign > /dev/null"
+alias boom="spin destroy --all"
 
 # Aliases - Shopify Dev
 alias dsa="dev style --include-branch-commits"
