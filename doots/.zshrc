@@ -27,15 +27,7 @@ am_i_spun() {
 GPG_TTY=$(tty)
 export GPG_TTY
 
-# Aliases - Local
-alias getit="sh ~/dev-stuff/spin-init/shipify-secrets-decrypt.sh"
-alias spk="bash ~/dev-stuff/output.sh"
-alias init-gpg="echo 'ugh' | /opt/dev/bin/gpg-auto-pin --clearsign > /dev/null"
-alias boom="spin destroy --all"
-
-# Aliases - Shopify Dev
-alias dsa="dev style --include-branch-commits"
-
+source $HOME/.aliases
 source $ZSH/oh-my-zsh.sh
 
 # Add local or spin stuff to prompt
