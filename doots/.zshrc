@@ -5,6 +5,7 @@
 export ZSH="$HOME/.oh-my-zsh"
 export ZSH_THEME="crunch"
 plugins=(ruby rails git sudo)
+setopt RM_STAR_SILENT
 
 # Shopify default zshrc has some good stuff
 if [ -n "$SPIN" ]; then

@@ -1,11 +1,13 @@
 # Local scripts
 alias getit="$HOME/dev-stuff/spin/shipify-spin-setup.sh"
 alias spk="$HOME/dev-stuff/scripts/output.sh"
-# alias scratch="$HOME/dev-stuff/scratches/scratch.sh"
+alias note="$HOME/dev-stuff/scripts/note.sh"
 
 # Local general aliases
 alias init-gpg="echo 'GPG Initializing' | /opt/dev/bin/gpg-auto-pin --clearsign > /dev/null"
 alias boom="spin destroy --all"
+alias notes="cd $HOME/dev-stuff/notes"
+alias dnotes="rm -i $HOME/dev-stuff/notes/*"
 
 # Remote general aliases
 alias dsa="dev style --include-branch-commits"
