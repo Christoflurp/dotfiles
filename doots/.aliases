@@ -8,6 +8,8 @@ alias init-gpg="echo 'GPG Initializing' | /opt/dev/bin/gpg-auto-pin --clearsign 
 alias boom="spin destroy --all"
 alias notes="cd $HOME/dev-stuff/notes"
 alias dnotes="rm -i $HOME/dev-stuff/notes/*"
+alias dotfiles="cd $HOME/dev-stuff/dotfiles"
+alias scripts="cd $HOME/dev-stuff/scripts"
 
 # Remote general aliases
 alias dsa="dev style --include-branch-commits"
