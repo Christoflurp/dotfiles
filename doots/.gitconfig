@@ -26,3 +26,5 @@
   cmd = code --wait $MERGE
 [commit]
   gpgSign = true
+[pull]
+  rebase = true
