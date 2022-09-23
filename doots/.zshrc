@@ -4,7 +4,7 @@
 # oh-my-zsh setup
 export ZSH="$HOME/.oh-my-zsh"
 export ZSH_THEME="crunch"
-plugins=(ruby rails git sudo git-extras)
+plugins=(ruby rails git sudo)
 setopt RM_STAR_SILENT
 
 # Shopify default zshrc has some good stuff
