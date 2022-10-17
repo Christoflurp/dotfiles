@@ -5,7 +5,7 @@ alias note="$HOME/dev-stuff/scripts/note.sh"
 
 # Local general aliases
 alias init-gpg="echo 'GPG Initializing' | /opt/dev/bin/gpg-auto-pin --clearsign > /dev/null"
-alias boom="spin destroy --all"
+alias boom="spin destroy --all --confirm"
 alias notes="cd $HOME/dev-stuff/notes && glow"
 alias dnotes="rm -i $HOME/dev-stuff/notes/*"
 alias dotfiles="cd $HOME/dev-stuff/dotfiles"
