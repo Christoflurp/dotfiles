@@ -3,24 +3,43 @@
 # Make sure oh-my-zsh is installed
 [ ! -d ~/.oh-my-zsh ] && sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
-# Set $DOOT_DIR based on where local or on Spin
-if [[ -n $SPIN ]]; then
-  DOOT_DIR="$HOME/dotfiles/doots"
-else
-  DOOT_DIR="$HOME/dev-stuff/dotfiles/doots"
-fi
+DOOT_DIR="$HOME/dev-stuff/dotfiles/doots"
 
-# Copy dotfiles to the right place based on $DOOT_DIR
-if [[ -d $DOOT_DIR ]] && [[ ! -L $DOOT_DIR ]]; then
-  for doot in $(ls -ap $DOOT_DIR | grep -v /); do
-    dootname="$(basename "$doot")"
-    echo "Installing $dootname..."
-    target=~/"$dootname"
-    [[ -f "$target" ]] && mv "$target" "$target.bak"
-    cp "$DOOT_DIR/$dootname" $HOME/"$dootname"
-  done
+# Setup Dotfiles
+setupDotfiles() {
+  echo "Installing .gitconfig for $1..."
+  
+  if [[ $1 == 'local' ]]; then
+    gitConfigFile=".gitconfig.personal"
+  else
+    gitConfigFile=".gitconfig.work"
+  fi
+
+  cp "$DOOT_DIR/$gitConfigFile" $HOME/".gitconfig"
+
+  if [[ -d $DOOT_DIR ]] && [[ ! -L $DOOT_DIR ]]; then
+    for doot in $(ls -ap $DOOT_DIR | grep -v /); do
+      dootname="$(basename "$doot")"
+      if [[ $dootname =~ '.gitconfig' ]]; then
+        continue
+      fi
+
+      echo "Installing $dootname..."
+      target=~/"$dootname"
+      [[ -f "$target" ]] && mv "$target" "$target.bak"
+      cp "$DOOT_DIR/$dootname" $HOME/"$dootname"
+    done
+  else
+    echo "Can't find directory: $DOOT_DIR."
+  fi
+}
+
+
+# Personal or Work?
+if [[ $(uname -m) == 'arm64' ]]; then
+  setupDotfiles 'work'
 else
-  echo "Can't find directory: $DOOT_DIR."
+  setupDotfiles 'local'
 fi
 
 exec zsh
