@@ -3,7 +3,11 @@
 # Make sure oh-my-zsh is installed
 [ ! -d ~/.oh-my-zsh ] && sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
-DOOT_DIR="$HOME/dev-stuff/dotfiles/doots"
+if [[ -n $SPIN ]]; then
+  DOOT_DIR="$HOME/dotfiles"
+else
+  DOOT_DIR="$HOME/dev-stuff/dotfiles/doots"
+fi
 
 # Setup Dotfiles
 function setupDotfiles() {
