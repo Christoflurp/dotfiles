@@ -6,21 +6,24 @@
 DOOT_DIR="$HOME/dev-stuff/dotfiles/doots"
 
 # Setup Dotfiles
-setupDotfiles() {
-  echo "Installing .gitconfig for $1..."
-  
+function setupDotfiles() {
+  echo "Installing .gitconfig and .aliases for $1..."
+
   if [[ $1 == 'local' ]]; then
     gitConfigFile=".gitconfig.personal"
+    aliasFile=".aliases.personal"
   else
     gitConfigFile=".gitconfig.work"
+    aliasFile=".aliases.work"
   fi
 
   cp "$DOOT_DIR/$gitConfigFile" $HOME/".gitconfig"
+  cp "$DOOT_DIR/$aliasFile" $HOME/".alises"
 
   if [[ -d $DOOT_DIR ]] && [[ ! -L $DOOT_DIR ]]; then
     for doot in $(ls -ap $DOOT_DIR | grep -v /); do
       dootname="$(basename "$doot")"
-      if [[ $dootname =~ '.gitconfig' ]]; then
+      if [[ $dootname =~ '.gitconfig' || $dootname =~ '.aliases' ]]; then
         continue
       fi
 
@@ -33,7 +36,6 @@ setupDotfiles() {
     echo "Can't find directory: $DOOT_DIR."
   fi
 }
-
 
 # Personal or Work?
 if [[ $(uname -m) == 'arm64' ]]; then
