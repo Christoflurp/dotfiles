@@ -48,4 +48,6 @@ else
   setupDotfiles 'local'
 fi
 
-exec zsh
+if [[ ! "$SPIN" ]]; then
+  exec zsh
+fi
