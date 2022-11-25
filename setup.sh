@@ -22,7 +22,7 @@ function setupDotfiles() {
   fi
 
   cp "$DOOT_DIR/$gitConfigFile" $HOME/".gitconfig"
-  cp "$DOOT_DIR/$aliasFile" $HOME/".alises"
+  cp "$DOOT_DIR/$aliasFile" $HOME/".aliases"
 
   if [[ -d $DOOT_DIR ]] && [[ ! -L $DOOT_DIR ]]; then
     for doot in $(ls -ap $DOOT_DIR | grep -v /); do
