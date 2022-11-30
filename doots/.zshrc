@@ -21,6 +21,25 @@ am_i_spun() {
 	fi
 }
 
+# Function to start a spin instance with preferred args
+
+sup() {
+	if [[ ! $1 ]]; then
+		echo $1
+		echo "You need to pass a repo/constellation name"
+		echo "eg. shipify"
+	else
+		constellation=$1
+
+		if [[ -n $2 ]]; then
+			exec spin up $constellation --wait --name $2
+			exit
+		else
+			exec spin up $constellation --wait
+		fi
+	fi
+}
+
 source $HOME/.aliases
 source $ZSH/oh-my-zsh.sh
 
