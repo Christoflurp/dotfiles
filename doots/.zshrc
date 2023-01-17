@@ -42,6 +42,7 @@ sup() {
 
 source $HOME/.aliases
 source $ZSH/oh-my-zsh.sh
+source /opt/homebrew/opt/chruby/share/chruby/chruby.sh
 
 # Add local or spin stuff to prompt
 PROMPT+="$(am_i_spun) -> "
