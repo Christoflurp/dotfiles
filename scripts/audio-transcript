@@ -1,0 +1,51 @@
+#!/bin/bash
+
+clear
+
+gum style --border rounded --align center --width 50 --margin "0 0" --padding "0 6" --bold 'What prompt would you like to use?'
+prompt_template=$(ls "$HOME/dev-stuff/gpt-prompts" | gum choose)
+if [ -z "$prompt_template" ]; then
+  echo "No prompt template found. Exiting."
+  exit 1
+fi
+
+gum style --border rounded --align center --width 50 --margin "0 0" --padding "0 6" --bold 'Recording Audio... (press "q" to stop)'
+ffmpeg -y -f avfoundation -i ":0" -ar 16000 /tmp/audio-transcript-output.wav > /dev/null 2>&1
+
+gum style --border rounded --align center --width 50 --margin "0 0" --padding "0 6" --bold 'Transcribing Audio...'
+gum spin --spinner meter --show-output --title "OpenAI’s Whisper at work..." \
+  -- curl https://api.openai.com/v1/audio/transcriptions \
+  -H "Authorization: Bearer $OPENAI_API_KEY" \
+  -H "Content-Type: multipart/form-data" \
+  -F "file=@/tmp/audio-transcript-output.wav" \
+  -F "language=en" \
+  -F "response_format=text" \
+  -F "model=whisper-1" > /tmp/audio-transcript-output.txt
+
+if [ ! -s /tmp/audio-transcript-output.txt ]; then
+  echo "Transcription failed or produced empty output. Exiting."
+  rm /tmp/audio-transcript-output.wav
+  exit 1
+fi
+
+gum format < /tmp/audio-transcript-output.txt
+
+gum style --border rounded --align center --width 50 --margin "0 0" --padding "0 6" --bold 'Summarizing Transcript...'
+chat_prompt="$(cat "$HOME/dev-stuff/gpt-prompts/$prompt_template")\n\\\\n$(cat /tmp/audio-transcript-output.txt)\n\\\\n"
+
+result=$(gum spin --spinner meter --show-output --title "OpenAI’s GPT-4 at work..." \
+  -- sgpt --model "gpt-4" "${chat_prompt}")
+
+if [ -z "$result" ]; then
+  echo "Empty result. Exiting."
+  rm /tmp/audio-transcript-output.wav
+  rm /tmp/audio-transcript-output.txt
+  exit 1
+fi
+
+echo "$result" | gum format
+echo "$result" | pbcopy
+
+gum style --border hidden --align center --width 50 --margin "0 0" --padding "0 6" --bold 'Done! Summary is in clipboard.'
+rm /tmp/audio-transcript-output.wav
+rm /tmp/audio-transcript-output.txt

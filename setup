@@ -1,0 +1,70 @@
+#!/bin/bash
+
+# Make sure oh-my-zsh is installed
+[ ! -d ~/.oh-my-zsh ] && sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+
+# Set DOOT_DIR and configType based on environment
+if [[ -n $SPIN ]] || [[ $(uname -m) == 'arm64' ]]; then
+  DOOT_DIR="$HOME/dev-stuff/dotfiles/doots"
+  configType='work'
+else
+  DOOT_DIR="$HOME/dotfiles/doots"
+  configType='personal'
+fi
+
+# Setup Dotfiles
+function setupDotfiles() {
+  echo "Installing dotfiles for $configType..."
+
+  dotfiles=("aliases" "gitconfig" "tmux.conf" "vimrc" "zshrc")
+
+  for dotfile in "${dotfiles[@]}"; do
+    if [[ $dotfile == "aliases" || $dotfile == "gitconfig" ]]; then
+      source_file="$DOOT_DIR/.$dotfile.$configType"
+    else
+      source_file="$DOOT_DIR/.$dotfile"
+    fi
+
+    target_file="$HOME/.$dotfile"
+    backup_dir="$HOME/.dotfiles_backup"
+
+    if [[ -f "$target_file" ]]; then
+      [[ ! -d "$backup_dir" ]] && mkdir "$backup_dir"
+      mv "$target_file" "$backup_dir/$dotfile.bak"
+    fi
+
+    cp "$source_file" "$target_file"
+  done
+
+  for script in "$HOME/dev-stuff/dotfiles/scripts"/*; do
+    echo "Installing $script..."
+    link="/usr/local/bin/$(basename "$script")"
+    if [[ -L "$link" ]]; then
+      current_target=$(readlink -f "$link")
+      intended_target=$(readlink -f "$script")
+      if [[ "$current_target" != "$intended_target" ]]; then
+        echo "Updating $link..."
+        sudo rm "$link"
+        sudo ln -s "$script" "$link"
+      else
+        current_mtime=$(stat -f %m "$link")
+        intended_mtime=$(stat -f %m "$script")
+        if [[ "$current_mtime" -lt "$intended_mtime" ]]; then
+          echo "Updating $link..."
+          sudo rm "$link"
+          sudo ln -s "$script" "$link"
+        else
+          echo "$link already exists and points to the correct file. Skipping..."
+        fi
+      fi
+    else
+      sudo ln -s "$script" "$link"
+    fi
+  done
+}
+
+setupDotfiles
+
+if [[ ! "$SPIN" ]]; then
+  exec zsh
+fi
