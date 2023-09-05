@@ -4,12 +4,15 @@
 [ ! -d ~/.oh-my-zsh ] && sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
 # Set DOOT_DIR and configType based on environment
-if [[ -n $SPIN ]] || [[ $(uname -m) == 'arm64' ]]; then
-  DOOT_DIR="$HOME/dev-stuff/dotfiles/doots"
-  configType='work'
+if [ -n "$SPIN" ]; then
+    DOOT_DIR="$HOME/dotfiles/doots"
+    configType="work"
+elif [ "$(uname -m)" = "arm64" ]; then
+    DOOT_DIR="$HOME/dev-stuff/dotfiles/doots"
+    configType="work"
 else
-  DOOT_DIR="$HOME/dotfiles/doots"
-  configType='personal'
+    DOOT_DIR="$HOME/dev-stuff/dotfiles/doots"
+    configType="personal"
 fi
 
 # Setup Dotfiles
