@@ -1,16 +1,18 @@
 #!/bin/bash
 
+PROMPT_DIRECTORY="$HOME/dev-stuff/dotfiles/prompts"
+
 clear
 
 gum style --border rounded --align center --width 50 --margin "0 0" --padding "0 6" --bold 'What prompt would you like to use?'
-prompt_template=$(ls "$HOME/dev-stuff/gpt-prompts" | gum choose)
+prompt_template=$(ls $PROMPT_DIRECTORY | gum choose)
 if [ -z "$prompt_template" ]; then
   echo "No prompt template found. Exiting."
   exit 1
 fi
 
 gum style --border rounded --align center --width 50 --margin "0 0" --padding "0 6" --bold 'Recording Audio... (press "q" to stop)'
-ffmpeg -y -f avfoundation -i ":0" -ar 16000 /tmp/audio-transcript-output.wav > /dev/null 2>&1
+ffmpeg -y -f avfoundation -i ":2" -ar 16000 /tmp/audio-transcript-output.wav > /dev/null 2>&1
 
 gum style --border rounded --align center --width 50 --margin "0 0" --padding "0 6" --bold 'Transcribing Audio...'
 gum spin --spinner meter --show-output --title "OpenAI’s Whisper at work..." \
@@ -31,7 +33,7 @@ fi
 gum format < /tmp/audio-transcript-output.txt
 
 gum style --border rounded --align center --width 50 --margin "0 0" --padding "0 6" --bold 'Summarizing Transcript...'
-chat_prompt="$(cat "$HOME/dev-stuff/gpt-prompts/$prompt_template")\n\\\\n$(cat /tmp/audio-transcript-output.txt)\n\\\\n"
+chat_prompt="$(cat "$PROMPT_DIRECTORY/$prompt_template")\n\\\\n$(cat /tmp/audio-transcript-output.txt)\n\\\\n"
 
 result=$(gum spin --spinner meter --show-output --title "OpenAI’s GPT-4 at work..." \
   -- sgpt --model "gpt-4" "${chat_prompt}")
