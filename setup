@@ -6,24 +6,24 @@
 # Set DOOT_DIR and configType based on environment
 if [ -n "$SPIN" ]; then
     DOOT_DIR="$HOME/dotfiles/doots"
-    configType="work"
+    CONFIG_TYPE="work"
 elif [ "$(uname -m)" = "arm64" ]; then
     DOOT_DIR="$HOME/dev-stuff/dotfiles/doots"
-    configType="work"
+    CONFIG_TYPE="work"
 else
     DOOT_DIR="$HOME/dev-stuff/dotfiles/doots"
-    configType="personal"
+    CONFIG_TYPE="personal"
 fi
 
 # Setup Dotfiles
 function setupDotfiles() {
-  echo "Installing dotfiles for $configType..."
+  echo "Installing dotfiles for $CONFIG_TYPE..."
 
   dotfiles=("aliases" "gitconfig" "tmux.conf" "vimrc" "zshrc")
 
   for dotfile in "${dotfiles[@]}"; do
     if [[ $dotfile == "aliases" || $dotfile == "gitconfig" ]]; then
-      source_file="$DOOT_DIR/.$dotfile.$configType"
+      source_file="$DOOT_DIR/.$dotfile.$CONFIG_TYPE"
     else
       source_file="$DOOT_DIR/.$dotfile"
     fi

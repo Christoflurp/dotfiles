@@ -1,0 +1,29 @@
+#!/bin/bash
+
+function get_weather() {
+  local coords
+  local lat
+  local lon
+  coords=$(curl -s "http://api.openweathermap.org/geo/1.0/direct?q=Ottawa,Ontario,CA&appid=$WEATHER_API_KEY")
+  lat=$(echo "$coords" | jq '.[0].lat')
+  lon=$(echo "$coords" | jq '.[0].lon')
+
+  curl "https://api.openweathermap.org/data/3.0/onecall?lat=$lat&lon=$lon&exclude=current,minutely,hourly,alerts&appid=$WEATHER_API_KEY" | jq
+}
+
+function generate_context() {
+  local metadata="Metadata: "
+  metadata+="Name: Chris Sweeney\\n"
+  metadata+="Profession: Senior Software Developer\\n"
+  metadata+="Company: Shopify\\n"
+  metadata+="Team: Shipping Platform Engineering\\n"
+  metadata+="Location: Ottawa, Ontario, Canada\\n"
+  metadata+="Timezone: Eastern Time\\n"
+  metadata+="Date: $(date +%Y-%m-%d)\\n"
+  metadata+="Time: $(date +%H:%M:%S)\\n"
+  # metadata+="Weather: $(get_weather)"
+
+  echo "$metadata"
+}
+
+generate_context

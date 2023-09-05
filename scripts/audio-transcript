@@ -4,17 +4,25 @@ PROMPT_DIRECTORY="$HOME/dev-stuff/dotfiles/prompts"
 
 clear
 
-gum style --border rounded --align center --width 50 --margin "0 0" --padding "0 6" --bold 'What prompt would you like to use?'
-prompt_template=$(ls $PROMPT_DIRECTORY | gum choose)
-if [ -z "$prompt_template" ]; then
-  echo "No prompt template found. Exiting."
-  exit 1
-fi
+function gum_style() {
+  # Just a wrapper for gum to make it easier to read where it's called
+  local input_string="$1"
+  gum style --border rounded --align center --width 50 --margin "0 0" --padding "0 6" --bold "$input_string"
+}
 
-gum style --border rounded --align center --width 50 --margin "0 0" --padding "0 6" --bold 'Recording Audio... (press "q" to stop)'
+function remove_temp_files() {
+  # Deletes both temp files, silences problems because it's not important
+  rm /tmp/audio-transcript-output.wav > /dev/null 2>&1
+  rm /tmp/audio-transcript-output.txt > /dev/null 2>&1
+}
+
+gum_style 'What prompt would you like to use?'
+prompt_template=$(find "$PROMPT_DIRECTORY" -type f -print0 | xargs -0 basename | gum choose)
+
+gum_style 'Recording Audio... (press "q" to stop)'
 ffmpeg -y -f avfoundation -i ":2" -ar 16000 /tmp/audio-transcript-output.wav > /dev/null 2>&1
 
-gum style --border rounded --align center --width 50 --margin "0 0" --padding "0 6" --bold 'Transcribing Audio...'
+gum_style 'Transcribing Audio...'
 gum spin --spinner meter --show-output --title "OpenAI’s Whisper at work..." \
   -- curl https://api.openai.com/v1/audio/transcriptions \
   -H "Authorization: Bearer $OPENAI_API_KEY" \
@@ -26,13 +34,13 @@ gum spin --spinner meter --show-output --title "OpenAI’s Whisper at work..." \
 
 if [ ! -s /tmp/audio-transcript-output.txt ]; then
   echo "Transcription failed or produced empty output. Exiting."
-  rm /tmp/audio-transcript-output.wav
+  remove_temp_files
   exit 1
 fi
 
 gum format < /tmp/audio-transcript-output.txt
 
-gum style --border rounded --align center --width 50 --margin "0 0" --padding "0 6" --bold 'Summarizing Transcript...'
+gum_style 'Summarizing Transcript...'
 chat_prompt="$(cat "$PROMPT_DIRECTORY/$prompt_template")\n\\\\n$(cat /tmp/audio-transcript-output.txt)\n\\\\n"
 
 result=$(gum spin --spinner meter --show-output --title "OpenAI’s GPT-4 at work..." \
@@ -40,14 +48,12 @@ result=$(gum spin --spinner meter --show-output --title "OpenAI’s GPT-4 at wor
 
 if [ -z "$result" ]; then
   echo "Empty result. Exiting."
-  rm /tmp/audio-transcript-output.wav
-  rm /tmp/audio-transcript-output.txt
+  remove_temp_files
   exit 1
 fi
 
 echo "$result" | gum format
 echo "$result" | pbcopy
 
-gum style --border hidden --align center --width 50 --margin "0 0" --padding "0 6" --bold 'Done! Summary is in clipboard.'
-rm /tmp/audio-transcript-output.wav
-rm /tmp/audio-transcript-output.txt
+gum_style 'Done! Summary is in clipboard.'
+remove_temp_files
