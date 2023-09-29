@@ -6,12 +6,15 @@
 # Set DOOT_DIR and configType based on environment
 if [ -n "$SPIN" ]; then
     DOOT_DIR="$HOME/dotfiles/doots"
+    CODE_CONFIG_DIR="$HOME/.config/Code/User"
     CONFIG_TYPE="work"
 elif [ "$(uname -m)" = "arm64" ]; then
     DOOT_DIR="$HOME/dev-stuff/dotfiles/doots"
+    CODE_CONFIG_DIR="$HOME/Library/Application Support/Code/User"
     CONFIG_TYPE="work"
 else
     DOOT_DIR="$HOME/dev-stuff/dotfiles/doots"
+    CODE_CONFIG_DIR="$HOME/Library/Application Support/Code/User"
     CONFIG_TYPE="personal"
 fi
 
@@ -20,6 +23,7 @@ function setupDotfiles() {
   echo "Installing dotfiles for $CONFIG_TYPE..."
 
   dotfiles=("aliases" "gitconfig" "tmux.conf" "vimrc" "zshrc")
+  configFiles=("keybindings")
 
   for dotfile in "${dotfiles[@]}"; do
     if [[ $dotfile == "aliases" || $dotfile == "gitconfig" ]]; then
@@ -62,6 +66,12 @@ function setupDotfiles() {
       fi
     else
       sudo ln -s "$script" "$link"
+    fi
+  done
+
+  for config in "${configFiles[@]}"; do
+    if [[ $config == "keybindings" ]]; then
+      source_file="$CODE_CONFIG_DIR/$config.json"
     fi
   done
 }
