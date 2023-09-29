@@ -41,11 +41,12 @@ function setupDotfiles() {
       mv "$target_file" "$backup_dir/$dotfile.bak"
     fi
 
+    echo "Installing $dotfile..."
     cp "$source_file" "$target_file"
   done
 
   for script in "$HOME/dev-stuff/dotfiles/scripts"/*; do
-    echo "Installing $script..."
+    echo "Installing $(basename "$script")"
     link="/usr/local/bin/$(basename "$script")"
     if [[ -L "$link" ]]; then
       current_target=$(readlink -f "$link")
@@ -62,7 +63,7 @@ function setupDotfiles() {
           sudo rm "$link"
           sudo ln -s "$script" "$link"
         else
-          echo "$link already exists and points to the correct file. Skipping..."
+          echo -e "  Symlink already exists and points to the correct file."
         fi
       fi
     else
@@ -73,6 +74,7 @@ function setupDotfiles() {
   for config in "${configFiles[@]}"; do
     if [ -n "$SPIN" ]; then
       if [[ $config == "keybindings" ]]; then
+        echo "Installing $config..."
         source_file="$CODE_CONFIG_DIR/$config.json"
       fi
     fi
