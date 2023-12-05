@@ -1,1 +1,3 @@
 # Personal aliases
+
+alias flurp="rsync -avz htdocs christoflurp@christoflurp.com:/var/www/"
