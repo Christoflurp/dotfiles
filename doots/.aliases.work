@@ -2,6 +2,7 @@
 alias boom="spin destroy --all --confirm"
 alias dotfiles="cd $HOME/dev-stuff/dotfiles"
 alias scripts="cd $HOME/dev-stuff/scripts"
+alias sup="function _sup() { spin up $1 -wn $2 $@; }; _sup"
 
 # Remote general aliases
 alias dsa="dev style --include-branch-commits"
