@@ -1,0 +1,12 @@
+#!/bin/bash
+
+if [ -z "$2" ]; then
+    command=("spin" "up" "$1" "-w")
+    command+=("${@:3}")
+else
+    command=("spin" "up" "$1" "-wn" "$2")
+    command+=("${@:3}")
+fi
+
+echo "Executing: ${command[*]}"
+"${command[@]}"
