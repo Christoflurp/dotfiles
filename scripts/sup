@@ -1,9 +1,19 @@
 #!/bin/bash
 
-if [ -z "$2" ]; then
+# Function to check if the argument starts with a dash ("-"), which implies it's a flag.
+function is_flag() {
+    [[ $1 == -* ]]
+}
+
+if [[ -z "$2" ]]; then
+    # Only one argument provided; treat it as a simple case.
     command=("spin" "up" "$1" "-w")
+elif is_flag "$2"; then
+    # Second argument is a flag; pass all subsequent arguments as is.
+    command=("spin" "up" "$1" "-w" "$2")
     command+=("${@:3}")
 else
+    # Second argument is provided and it's not a flag; treat it as the name with `-wn`.
     command=("spin" "up" "$1" "-wn" "$2")
     command+=("${@:3}")
 fi
