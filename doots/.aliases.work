@@ -4,5 +4,10 @@ alias dotfiles="cd $HOME/dev-stuff/dotfiles"
 alias scripts="cd $HOME/dev-stuff/scripts"
 alias sup="$HOME/dev-stuff/dotfiles/scripts/sup"
 
-# Remote general aliases
-alias dsa="dev style --include-branch-commits"
+# I'm don't want to type dev every time
+alias dstyle="dev style --include-branch-commits"
+alias dtest="dev test"
+alias shopify="dev cd shopify"
+alias web="dev cd web"
+alias shop-server="dev cd shop-server"
+alias dcd="dev cd"

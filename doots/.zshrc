@@ -12,6 +12,12 @@ if [ -n "$SPIN" ]; then
 	source /etc/zsh/zshrc.default.inc.zsh
 fi
 
+# Initialize dev tool if it exists
+if [ -d /opt/dev ]; then
+  typeset __dev_source_dir="/opt/dev"
+  source "${__dev_source_dir}/dev.sh"
+fi
+
 # Check if local or on spin for PROMPT
 am_i_spun() {
 	if [[ "${SPIN}" ]]; then
