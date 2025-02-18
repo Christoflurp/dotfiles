@@ -18,12 +18,12 @@
 [user]
   name = Chris Sweeney
   email = chris.sweeney@shopify.com
-[difftool "vscode"]
-  cmd = code --wait --diff $LOCAL $REMOTE
+[difftool "cursor"]
+  cmd = cursor --wait --diff $LOCAL $REMOTE
 [merge]
-  tool = vscode
-[mergetool "vscode"]
-  cmd = code --wait $MERGE
+  tool = cursor
+[mergetool "cursor"]
+  cmd = cursor --wait $MERGE
 [commit]
   gpgSign = true
 [pull]

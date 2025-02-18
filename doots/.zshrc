@@ -3,7 +3,7 @@
 
 # oh-my-zsh setup
 export ZSH="$HOME/.oh-my-zsh"
-export ZSH_THEME="crunch"
+export ZSH_THEME="fwalch"
 plugins=(ruby rails git sudo)
 setopt RM_STAR_SILENT
 
