@@ -3,6 +3,7 @@ alias boom="spin destroy --all --confirm"
 alias dotfiles="cd $HOME/dev-stuff/dotfiles"
 alias scripts="cd $HOME/dev-stuff/scripts"
 alias sup="$HOME/dev-stuff/dotfiles/scripts/sup"
+alias cl="tput clear"
 
 # I'm don't want to type dev every time
 alias dstyle="dev style --include-branch-commits"
