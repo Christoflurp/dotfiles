@@ -23,7 +23,7 @@ fi
 function setupDotfiles() {
   echo "Installing dotfiles for $CONFIG_TYPE..."
 
-  dotfiles=("aliases" "gitconfig" "tmux.conf" "vimrc" "zshrc")
+  dotfiles=("aliases" "gitconfig" "gitignore_global" "tmux.conf" "vimrc" "zshrc")
   configFiles=("keybindings")
 
   for dotfile in "${dotfiles[@]}"; do
@@ -44,6 +44,10 @@ function setupDotfiles() {
     echo "Installing $dotfile..."
     cp "$source_file" "$target_file"
   done
+
+  # Configure git to use the global gitignore
+  echo "Configuring git to use global gitignore..."
+  git config --global core.excludesfile ~/.gitignore_global
 
   for script in "$HOME/dev-stuff/dotfiles/scripts"/*; do
     echo "Installing $(basename "$script")"

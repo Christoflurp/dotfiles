@@ -12,3 +12,6 @@ alias shopify="dev cd shopify"
 alias web="dev cd web"
 alias shop-server="dev cd shop-server"
 alias dcd="dev cd"
+
+# Graphite Good morning
+alias goodmorning="gt co main && gt sync && gt ss && dev up"
