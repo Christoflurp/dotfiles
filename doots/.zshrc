@@ -18,21 +18,17 @@ if [ -d /opt/dev ]; then
   source "${__dev_source_dir}/dev.sh"
 fi
 
-# Check if local or on spin for PROMPT
-am_i_spun() {
-	if [[ "${SPIN}" ]]; then
-		echo "🌀"
-	else
-		echo "🏠"
-	fi
+# Are you in a work directory?
+prompt_emoji() {
+	case "$PWD" in
+		*shopify*) echo "🏢";;
+		*) echo "🏠";;
+	esac
 }
 
 source $HOME/.aliases
 source $ZSH/oh-my-zsh.sh
+source /opt/homebrew/opt/chruby/share/chruby/chruby.sh
 
-if [ ! -n "$SPIN" ]; then
-	source /opt/homebrew/opt/chruby/share/chruby/chruby.sh
-fi
-
-# Add local or spin stuff to prompt
-PROMPT+="$(am_i_spun) -> "
+# Update the prompt
+PROMPT+='$(prompt_emoji) -> '
