@@ -22,6 +22,7 @@ fi
 prompt_emoji() {
 	case "$PWD" in
 		*shopify*) echo "🏢";;
+		*world*) echo "🏢";;
 		*) echo "🏠";;
 	esac
 }
