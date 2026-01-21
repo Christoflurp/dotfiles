@@ -5,14 +5,16 @@ alias scripts="cd $HOME/dev-stuff/scripts"
 alias sup="$HOME/dev-stuff/dotfiles/scripts/sup"
 alias cl="tput clear"
 alias grow="cd $HOME/dev-stuff/growth/growing-flurp"
+alias dev-stuff="cd $HOME/dev-stuff"
 
 # I'm don't want to type dev every time
 alias dstyle="dev style --include-branch-commits"
 alias dtest="dev test"
 alias shop="dev cd shopify"
-alias web="dev cd admin-web"
+alias admin="dev cd admin-web"
 alias shop-server="dev cd shop-server"
 alias sfr="dev cd storefront"
+alias checkout="dev cd checkout-web"
 alias dcd="dev cd"
 
 # Graphite Good morning
