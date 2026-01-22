@@ -15,6 +15,7 @@ alias admin="dev cd admin-web"
 alias shop-server="dev cd shop-server"
 alias sfr="dev cd storefront"
 alias checkout="dev cd checkout-web"
+alias pdp="dev cd shop-promise-pdp"
 alias dcd="dev cd"
 
 # Graphite Good morning
