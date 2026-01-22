@@ -6,6 +6,7 @@ alias sup="$HOME/dev-stuff/dotfiles/scripts/sup"
 alias cl="tput clear"
 alias grow="cd $HOME/dev-stuff/growth/growing-flurp"
 alias dev-stuff="cd $HOME/dev-stuff"
+alias scratch="cd $HOME/dev-stuff/work-scratch"
 
 # I'm don't want to type dev every time
 alias dstyle="dev style --include-branch-commits"
