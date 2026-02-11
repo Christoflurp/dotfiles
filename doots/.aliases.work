@@ -21,3 +21,6 @@ alias dcd="dev cd"
 
 # Graphite Good morning
 alias goodmorning="gt co main && gt sync && gt ss && dev up"
+
+# Team Discovery Channel
+alias tdc="$HOME/dev-stuff/dotfiles/scripts/tdc"
