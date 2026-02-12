@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(echo:*)",
+      "Bash(chmod:*)",
+      "Bash(/Users/christoflurp/dev-stuff/growth/tdc-cli/tdc:*)",
+      "Bash(col:*)",
+      "Bash(tmux select-pane:*)",
+      "Bash(tmux list-panes:*)",
+      "Bash(tmux kill-session:*)"
+    ]
+  }
+}

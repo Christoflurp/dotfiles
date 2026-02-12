@@ -50,6 +50,7 @@ function setupDotfiles() {
   git config --global core.excludesfile ~/.gitignore_global
 
   for script in "$HOME/dev-stuff/dotfiles/scripts"/*; do
+    [[ ! -f "$script" ]] && continue
     echo "Installing $(basename "$script")"
     link="/usr/local/bin/$(basename "$script")"
     if [[ -L "$link" ]]; then

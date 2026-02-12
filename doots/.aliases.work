@@ -1,10 +1,10 @@
 # Local general aliases
 alias boom="spin destroy --all --confirm"
 alias dotfiles="cd $HOME/dev-stuff/dotfiles"
-alias scripts="cd $HOME/dev-stuff/scripts"
+alias scripts="cd $HOME/dev-stuff/dotfiles/scripts"
 alias sup="$HOME/dev-stuff/dotfiles/scripts/sup"
 alias cl="tput clear"
-alias grow="cd $HOME/dev-stuff/growth/growing-flurp"
+alias grow="cd $HOME/dev-stuff/projects/growing-flurp"
 alias dev-stuff="cd $HOME/dev-stuff"
 alias scratch="cd $HOME/dev-stuff/work-scratch"
 
@@ -21,6 +21,3 @@ alias dcd="dev cd"
 
 # Graphite Good morning
 alias goodmorning="gt co main && gt sync && gt ss && dev up"
-
-# Team Discovery Channel
-alias tdc="$HOME/dev-stuff/dotfiles/scripts/tdc"
