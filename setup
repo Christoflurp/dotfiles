@@ -5,17 +5,11 @@
 
 # Set DOOT_DIR and configType based on environment
 
-if [ -n "$SPIN" ]; then
-    DOOT_DIR="$HOME/dotfiles/doots"
-    CODE_CONFIG_DIR="$HOME/.config/Code/User"
-    CONFIG_TYPE="work"
-elif [ "$(uname -m)" = "arm64" ]; then
+if [ "$(uname -m)" = "arm64" ]; then
     DOOT_DIR="$HOME/dev-stuff/dotfiles/doots"
-    CODE_CONFIG_DIR="$HOME/Library/Application Support/Code/User"
     CONFIG_TYPE="work"
 else
     DOOT_DIR="$HOME/dev-stuff/dotfiles/doots"
-    CODE_CONFIG_DIR="$HOME/Library/Application Support/Code/User"
     CONFIG_TYPE="personal"
 fi
 
@@ -87,7 +81,3 @@ function setupDotfiles() {
 }
 
 setupDotfiles
-
-if [[ ! "$SPIN" ]]; then
-  exec zsh
-fi

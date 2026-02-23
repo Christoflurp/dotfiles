@@ -1,8 +1,6 @@
 # Local general aliases
-alias boom="spin destroy --all --confirm"
 alias dotfiles="cd $HOME/dev-stuff/dotfiles"
-alias scripts="cd $HOME/dev-stuff/dotfiles/scripts"
-alias sup="$HOME/dev-stuff/dotfiles/scripts/sup"
+alias scripts="cd $HOME/dev-stuff/scripts"
 alias cl="tput clear"
 alias grow="cd $HOME/dev-stuff/projects/growing-flurp"
 alias dev-stuff="cd $HOME/dev-stuff"

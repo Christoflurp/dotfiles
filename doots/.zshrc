@@ -7,11 +7,6 @@ export ZSH_THEME="fwalch"
 plugins=(ruby rails git sudo)
 setopt RM_STAR_SILENT
 
-# Shopify default zshrc has some good stuff
-if [ -n "$SPIN" ]; then
-	source /etc/zsh/zshrc.default.inc.zsh
-fi
-
 # Initialize dev tool if it exists
 if [ -d /opt/dev ]; then
   typeset __dev_source_dir="/opt/dev"
