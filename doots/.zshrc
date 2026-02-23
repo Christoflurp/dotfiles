@@ -24,7 +24,9 @@ prompt_emoji() {
 
 source $HOME/.aliases
 source $ZSH/oh-my-zsh.sh
-source /opt/homebrew/opt/chruby/share/chruby/chruby.sh
+if [ -f /opt/homebrew/opt/chruby/share/chruby/chruby.sh ]; then
+  source /opt/homebrew/opt/chruby/share/chruby/chruby.sh
+fi
 
 # Update the prompt
 PROMPT+='$(prompt_emoji) -> '
