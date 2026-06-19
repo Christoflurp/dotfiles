@@ -4,7 +4,23 @@ alias scripts="cd $HOME/dev-stuff/scripts"
 alias cl="tput clear"
 alias grow="cd $HOME/dev-stuff/projects/growing-flurp"
 alias dev-stuff="cd $HOME/dev-stuff"
-alias scratch="cd $HOME/dev-stuff/work-scratch"
+scratch() {
+  local dir="$HOME/dev-stuff/work-scratch"
+  case "${1:-}" in
+    -r|--recent)
+      local latest=$(ls -d "$dir"/*/ 2>/dev/null | sort -r | head -1)
+      if [[ -z "$latest" ]]; then
+        echo "No scratch directories found"
+        return 1
+      fi
+      echo "Opening: ${latest##*/}"
+      code "$latest"
+      ;;
+    *)
+      cd "$dir"
+      ;;
+  esac
+}
 
 # I'm don't want to type dev every time
 alias dstyle="dev style --include-branch-commits"
@@ -16,6 +32,10 @@ alias sfr="dev cd storefront"
 alias checkout="dev cd checkout-web"
 alias pdp="dev cd shop-promise-pdp"
 alias dcd="dev cd"
+
+# Team Discovery Channel
+alias tdc="devx claude -- --append-system-prompt 'Read ~/dev-stuff/agentic-development/profiles/team_discovery_channel/martin_prince.md for your identity. Then greet me and wait for my vision.'"
+alias techspec="devx claude -- --append-system-prompt 'Read ~/dev-stuff/agentic-development/profiles/tech-design-copilot.md for your identity. Wait for me to provide a PR, branch, or project description.'"
 
 # Graphite Good morning
 alias goodmorning="gt co main && gt sync && gt ss && dev up"

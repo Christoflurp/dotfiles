@@ -13,11 +13,13 @@ else
     CONFIG_TYPE="personal"
 fi
 
+DOTFILES_DIR="$(dirname "$DOOT_DIR")"
+
 # Setup Dotfiles
 function setupDotfiles() {
   echo "Installing dotfiles for $CONFIG_TYPE..."
 
-  dotfiles=("aliases" "gitconfig" "gitignore_global" "tmux.conf" "vimrc" "zshrc")
+  dotfiles=("aliases" "gitconfig" "gitignore_global" "tmux.conf" "vimrc" "zshenv" "zshrc")
   configFiles=("keybindings")
 
   for dotfile in "${dotfiles[@]}"; do
@@ -69,6 +71,11 @@ function setupDotfiles() {
       sudo ln -s "$script" "$link"
     fi
   done
+
+  pi_config_dir="$HOME/.pi/agent"
+  mkdir -p "$pi_config_dir"
+  echo "Installing pi keybindings..."
+  cp "$DOTFILES_DIR/config/pi/keybindings.json" "$pi_config_dir/keybindings.json"
 
   for config in "${configFiles[@]}"; do
     if [ -n "$SPIN" ]; then

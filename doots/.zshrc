@@ -13,13 +13,32 @@ if [ -d /opt/dev ]; then
   source "${__dev_source_dir}/dev.sh"
 fi
 
-# Are you in a work directory?
+# Are you in a work directory? In a world worktree, show which tree you're on.
 prompt_emoji() {
+	if [[ "$PWD" == */world/trees/* ]]; then
+		local tree="${PWD#*/world/trees/}"
+		tree="${tree%%/*}"
+		if [[ "$tree" == "root" ]]; then
+			echo "⚓"
+		else
+			echo "🌲"
+		fi
+		return
+	fi
 	case "$PWD" in
 		*shopify*) echo "🏢";;
 		*world*) echo "🏢";;
 		*) echo "🏠";;
 	esac
+}
+
+# Show the world worktree name (e.g. [root], [whatever-comes-up]) in magenta.
+prompt_worktree() {
+	if [[ "$PWD" == */world/trees/* ]]; then
+		local tree="${PWD#*/world/trees/}"
+		tree="${tree%%/*}"
+		echo " %{$fg[magenta]%}[$tree]%{$reset_color%}"
+	fi
 }
 
 source $HOME/.aliases
@@ -28,5 +47,5 @@ if [ -f /opt/homebrew/opt/chruby/share/chruby/chruby.sh ]; then
   source /opt/homebrew/opt/chruby/share/chruby/chruby.sh
 fi
 
-# Update the prompt
-PROMPT+='$(prompt_emoji) -> '
+# Update the prompt: shopify [worktree] (branch) <emoji> ->
+PROMPT='%{$fg_bold[green]%} %{$fg[cyan]%}%c$(prompt_worktree)%{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%} %{$reset_color%}$(prompt_emoji) -> '
