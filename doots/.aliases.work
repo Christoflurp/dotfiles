@@ -33,4 +33,65 @@ alias checkout="dev cd checkout-web"
 alias pdp="dev cd shop-promise-pdp"
 alias dcd="dev cd"
 
-alias overseer="scratch && devx pi update && devx pi"
+# Overseer: omp in work-scratch, supervised by herdr, inside whatever terminal
+# you're in (cmux day-to-day). Same command works everywhere:
+#   - inside a herdr pane -> becomes the overseer in that pane
+#   - outside herdr       -> ensures the overseer workspace has a live omp
+#                            process (creating or restarting it as needed),
+#                            then attaches
+# omp is version-pinned by the Shopify tec toolchain (no self-update step);
+# herdr updates via brew.
+#
+# Liveness is read from `herdr pane process-info` (actual OS process), not
+# from agent_status, which is a screen-scrape heuristic and reports "done"
+# for an idle-but-running omp. The home pane is the workspace's oldest tab
+# (lowest tab number), which distinguishes it from tabs Overseer opens later
+# for dispatched workers.
+overseer() {
+  local dir="${OVERSEER_WORKSPACE_DIR:-$HOME/dev-stuff/work-scratch}"
+  local label="${OVERSEER_WORKSPACE_LABEL:-overseer}"
+
+  if [[ "${HERDR_ENV:-}" == "1" ]]; then
+    cd "$dir" && omp
+    return
+  fi
+
+  if ! herdr status server 2>/dev/null | grep -q '^status: running'; then
+    (herdr server >/dev/null 2>&1 &)
+    local i
+    for i in {1..20}; do
+      [[ -S "$HOME/.config/herdr/herdr.sock" ]] && break
+      sleep 0.25
+    done
+  fi
+
+  local workspace_id tab_id pane_id
+  workspace_id=$(herdr workspace list 2>/dev/null \
+    | jq -r --arg label "$label" '.result.workspaces[]? | select(.label == $label) | .workspace_id' \
+    | head -n1)
+
+  if [[ -z "$workspace_id" ]]; then
+    local created
+    created=$(herdr workspace create --cwd "$dir" --label "$label" 2>/dev/null)
+    workspace_id=$(jq -r '.result.root_pane.workspace_id' <<< "$created")
+    tab_id=$(jq -r '.result.tab.tab_id' <<< "$created")
+    pane_id=$(jq -r '.result.root_pane.pane_id' <<< "$created")
+  else
+    tab_id=$(herdr tab list --workspace "$workspace_id" 2>/dev/null \
+      | jq -r '.result.tabs | min_by(.number) | .tab_id')
+    pane_id=$(herdr pane list --workspace "$workspace_id" 2>/dev/null \
+      | jq -r --arg tab "$tab_id" '.result.panes[]? | select(.tab_id == $tab) | .pane_id' \
+      | head -n1)
+  fi
+
+  if [[ -n "$pane_id" ]]; then
+    local running
+    running=$(herdr pane process-info --pane "$pane_id" 2>/dev/null \
+      | jq -r '[.result.process_info.foreground_processes[]?.argv0] | index("omp")')
+    [[ "$running" == "null" ]] && herdr agent start "$label" --kind omp --pane "$pane_id" >/dev/null 2>&1
+  fi
+
+  [[ -n "$workspace_id" ]] && herdr workspace focus "$workspace_id" >/dev/null 2>&1
+  [[ -n "$tab_id" ]] && herdr tab focus "$tab_id" >/dev/null 2>&1
+  herdr
+}
